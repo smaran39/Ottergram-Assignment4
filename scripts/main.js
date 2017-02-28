@@ -5,6 +5,7 @@ var THUMBNAIL_LINK_SELECTOR = '[data-image-role="trigger"]';
 var HIDDEN_DETAIL_CLASS = 'hidden-detail';
 var TINY_EFFECT_CLASS = 'is-tiny';
 var ESC_KEY = 27;
+var NUM_KEY= 97;
 
 function setDetails(imageUrl, titleText) {
     'use strict';
@@ -73,10 +74,25 @@ function addKeyPressHandler() {
     });
 }
 
+function addKeyDownHandler(thumb, i) {
+    'use strict';
+    var index = i;
+  //  console.log(index);
+    document.body.addEventListener('keyup', function(event) {
+        event.preventDefault();
+        //console.log(event.keyCode);
+        if (event.keyCode === (NUM_KEY + index )) {
+            setDetailsFromThumb(thumb);
+            showDetails();
+        }
+    });
+}
+
 function initializeEvents() {
     'use strict';
     var thumbnails = getThumbnailsArray();
     thumbnails.forEach(addThumbClickHandler);
+    thumbnails.forEach(addKeyDownHandler);
     addKeyPressHandler();
 }
 
